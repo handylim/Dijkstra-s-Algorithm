@@ -68,3 +68,66 @@ def dijkstra(graph):
 	fp.close()
 	webbrowser.open_new_tab('http://localhost/dijkstra')
 
+
+if __name__ == "__main__":
+	graph = {}
+	currentNode = None
+
+	print("-- Dijkstra's Algorithm --", "1. Insert node", "2. Update distance", "3. Show forwarding table", "0. Exit", sep = '\n')
+	response = input()
+
+	while response is not '0':
+		if response is '1':
+			currentNode = input("Insert new node: ")
+			graph.update({currentNode: {}})
+			while True:
+				neighbour = input("Insert the neighbour of node " + currentNode + " (Type \"Exit\" to stop): ")
+				if neighbour.lower() == "exit":
+					break
+				distance = input("Insert the distance from " + currentNode + " to " + neighbour + ": ")
+				graph[currentNode].update({neighbour: float(distance)})
+			""" This section of code is indented 1 tab more that it should be so the next elif can work
+			elif response is '2':
+				if currentNode is not None:
+					neighbour = input("Insert the neighbour of node " + currentNode + ": ")
+					distance = input("Insert the distance from " + currentNode + " to " + neighbour + ": ")
+
+					#if type(distance) is int:
+					graph[currentNode].update({neighbour: float(distance)})
+					#elif type(distance) is float:
+					#	graph[currentNode].update({neighbour: float(distance)})
+					#else:
+					#	print ("Distance should be a valid number")
+				else:
+					print("No node selected")
+			"""
+		elif response is '2':
+			source = input("Input the source node: ")
+			if source in graph:
+				destination = input("Input the destination node: ")
+				if destination in graph[source]:
+					newDistance = input("Input the new distance from node " + source + " to " + destination + ": ")
+
+					# if type(newDistance) is int:
+					graph[source][destination] = float(newDistance)
+					graph[destination][source] = float(newDistance)
+					""" This section of code is indented 1 tab more that it should be so the next else can work
+					elif type(newDistance) is float:
+						graph[source][destination] = float(newDistance)
+						graph[destination][source] = float(newDistance)
+					else:
+						print ("New distance should be a valid number")
+					"""
+				else:
+					print("Unknown destination node")
+			else:
+				print("Unknown source node")
+		elif response is '3':
+			dijkstra(graph)
+			break
+		else:
+			print('Unknown options')
+
+		print("\n-- Dijkstra's Algorithm --", "1. Insert node", "2. Update distance", "3. Show forwarding table", "0. Exit",
+		      sep = '\n')
+		response = input()
